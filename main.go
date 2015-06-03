@@ -3,13 +3,19 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"log"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Path Variable. -> %s", r.URL.Path[1:])
+	if r.Method != "GET" {
+		fmt.Fprintf(w, "405 method not allowed");
+	} else {
+		fmt.Fprintf(w, "Path Variable. -> %s", r.URL.Path[1:])	
+	}
+    
 }
 
 func main() {
     http.HandleFunc("/", handler)
-    http.ListenAndServe(":8080", nil)
+    log.Fatal(http.ListenAndServe(":8080", nil))
 }
