@@ -7,11 +7,13 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	if r.Method != "GET" {
 		w.WriteHeader(http.StatusMethodNotAllowed)
-		fmt.Fprintf(w, "405 method not allowed");
+		fmt.Fprintf(w, "{ \"code\": %d, \"message\": \"method not allowed\" }", http.StatusMethodNotAllowed)
 	} else {
-		fmt.Fprintf(w, "Path Variable. -> %s", r.URL.Path[1:])	
+		fmt.Fprintf(w, "{ \"path\": \"%s\" }", r.URL.Path[1:])	
 	}
     
 }
